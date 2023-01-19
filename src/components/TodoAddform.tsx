@@ -8,8 +8,16 @@ import { addTodo } from "../api/todoquery";
 // https://tkdodo.eu/blog/practical-react-query
 
 const TodoAddform = () => {
-  const [title, setTitle, resetTitle] = useInput("");
-  const [content, setContent, resetContent] = useInput("");
+  const {
+    value: title,
+    setinputValue: setTitleValue,
+    reset: resetTitle,
+  } = useInput("");
+  const {
+    value: content,
+    setinputValue: setContentValue,
+    reset: resetContent,
+  } = useInput("");
   const queryClient = useQueryClient();
 
   const addMutate = useMutation(addTodo, {
@@ -48,14 +56,14 @@ const TodoAddform = () => {
           type="text"
           placeholder="제목을 입력하세요"
           value={title}
-          onChange={setTitle}
+          onChange={setTitleValue}
         />
         <TodoInput
           className="contents"
           type="text"
           placeholder="내용을 입력하세요"
           value={content}
-          onChange={setContent}
+          onChange={setContentValue}
         />
         <CusttomButton>추가</CusttomButton>
       </TodoForm>
