@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import uuid from "react-uuid";
+import { v4 as uuidv4 } from "uuid";
 import { useInput } from "../hooks";
 import { useMutation, useQueryClient } from "react-query";
 import { addTodo } from "../api/todoquery";
@@ -27,7 +27,7 @@ const TodoAddform = () => {
     }
 
     let NewData = {
-      id: uuid(),
+      id: uuidv4(),
       title,
       content,
       isDone: false,
