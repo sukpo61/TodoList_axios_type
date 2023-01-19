@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import CusttomButton from "./CusttomButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteTodo, updateTodo } from "../api/todoquery";
@@ -66,7 +65,7 @@ const TodoContainer = ({ todo }) => {
       <TitleWrap>
         <div>제목 : {todo.title}</div>
         <CusttomButton
-          onClickFuntion={() => {
+          onClick={() => {
             navigate(`/${todo.id}`);
           }}
         >
@@ -100,21 +99,21 @@ const TodoContainer = ({ todo }) => {
       {todo.displaytoggle ? (
         <ButtonsWrap>
           <CusttomButton
-            onClickFuntion={() => {
+            onClick={() => {
               deleteMutate.mutate(todo.id);
             }}
           >
             삭제
           </CusttomButton>
-          <CusttomButton onClickFuntion={ToggleTodo}>수정</CusttomButton>
-          <CusttomButton onClickFuntion={ToggleisDone}>
+          <CusttomButton onClick={ToggleTodo}>수정</CusttomButton>
+          <CusttomButton onClick={ToggleisDone}>
             {todo.isDone ? "취소" : "완료"}
           </CusttomButton>
         </ButtonsWrap>
       ) : (
         <ButtonsWrap>
-          <CusttomButton onClickFuntion={ToggleTodo}>취소</CusttomButton>
-          <CusttomButton onClickFuntion={UpdateTodo}>수정</CusttomButton>
+          <CusttomButton onClick={ToggleTodo}>취소</CusttomButton>
+          <CusttomButton onClick={UpdateTodo}>수정</CusttomButton>
         </ButtonsWrap>
       )}
     </TodoContainerWrap>
@@ -162,4 +161,16 @@ const InputsWrap = styled.div`
   flex-direction: column;
   gap: 5px;
   align-items: flex-end;
+`;
+
+const CusttomButton = styled.button`
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+  border: 0.5px solid #a5a5a5;
+  border-radius: 30px;
+  font-weight: 200;
+  font-size: 12px;
+  color: #000000;
+  background-color: white;
 `;

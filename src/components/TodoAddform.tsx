@@ -26,7 +26,7 @@ const TodoAddform = () => {
     },
   });
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = (e: any) => {
     e.preventDefault();
 
     if (content === "" || title === "") {
@@ -92,4 +92,16 @@ const TodoInput = styled.input`
   width: 40%;
   border-radius: 12px;
   outline: none;
+`;
+
+const CusttomButton = styled.button`
+  width: 60px;
+  height: 30px;
+  cursor: pointer;
+  border: 0.5px solid #a5a5a5;
+  border-radius: 30px;
+  font-weight: 200;
+  font-size: 12px;
+  color: #000000;
+  background-color: white;
 `;
