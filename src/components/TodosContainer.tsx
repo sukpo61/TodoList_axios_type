@@ -2,19 +2,28 @@ import styled from "styled-components";
 import { __getTodo } from "../redux/modules/todos";
 import TodoContainer from "./TodoContainer";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { getTodos } from "../api/todoquery";
+import { useQuery } from "react-query";
+
+interface TodosProps {
+  TQueryFnData: unknown;
+  TError: unknown;
+}
 
 interface TodosContainerType {
   isActive: boolean;
 }
 
 const TodosContainer = ({ isActive }: TodosContainerType) => {
-  const { todos } = useAppSelector((state) => state.todos);
-
+  const { data } = useQuery<any>({
+    queryKey: ["todo"],
+    queryFn: getTodos,
+  });
   return (
     <TodosContainerWrap>
       {isActive ? <Title>Done</Title> : <Title>Working</Title>}
       <Contents>
-        {todos.map(
+        {data?.map(
           (todo, index) =>
             todo.isDone === isActive && (
               <TodoContainer key={todo.id} todo={todo}></TodoContainer>
