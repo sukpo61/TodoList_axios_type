@@ -4,26 +4,21 @@ import { __addTodo } from "../redux/modules/todos";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { useInput } from "../hooks";
 
 // https://tkdodo.eu/blog/practical-react-query
 
 const TodoAddform = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
-  const setTitleValue = (event: React.FormEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    setTitle(value);
-  };
-
-  const setContentValue = (event: React.FormEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = event;
-    setContent(value);
-  };
+  const {
+    value: title,
+    setinputValue: setTitleValue,
+    reset: resetTitle,
+  } = useInput("");
+  const {
+    value: content,
+    setinputValue: setContentValue,
+    reset: resetContent,
+  } = useInput("");
 
   const dispatch = useAppDispatch();
 
@@ -44,8 +39,11 @@ const TodoAddform = () => {
 
     dispatch(__addTodo(NewData));
 
-    setTitle("");
-    setContent("");
+    resetTitle();
+    resetContent();
+
+    // setTitle("");
+    // setContent("");
   };
 
   return (

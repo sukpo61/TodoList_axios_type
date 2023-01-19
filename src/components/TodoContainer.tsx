@@ -12,21 +12,14 @@ const TodoContainer = ({ todo }: any) => {
 
   const [title, setTitle] = useState(todo.title);
   const [content, setContent] = useState(todo.content);
-  // const canSave = [content, title].every(Boolean);
-  const UpdateTodo = () => {
-    // if (content === "" || title === "") {
-    //   window.alert("제목및 내용을 입력하세요");
-    //   return;
-    // }
-    console.log(todo);
 
+  const UpdateTodo = () => {
     let NewTodo = {
       ...todo,
       title,
       content,
       displaytoggle: !todo.displaytoggle,
     };
-    console.log(NewTodo);
 
     dispatch(__updateTodo(NewTodo));
   };
