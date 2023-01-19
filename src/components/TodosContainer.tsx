@@ -3,9 +3,28 @@ import styled from "styled-components";
 import TodoContainer from "./TodoContainer";
 import { getTodos } from "../api/todoquery";
 import { useQuery } from "react-query";
+import { AxiosError } from "axios";
 
-const TodosContainer = ({ isActive }) => {
-  const { isLoading, isError, data } = useQuery("todos", getTodos);
+interface errortype {}
+
+interface todotype {
+  id: string;
+  title: string;
+  content: string;
+  isDone: boolean;
+  displaytoggle: boolean;
+}
+
+interface TData {
+  title: string;
+  content: string;
+}
+
+const TodosContainer = ({ isActive }: any) => {
+  const { isLoading, isError, data } = useQuery<todotype[], AxiosError>(
+    "todos",
+    getTodos
+  );
 
   if (isLoading) {
     return <p>로딩중입니다....!</p>;
@@ -20,7 +39,7 @@ const TodosContainer = ({ isActive }) => {
       {isActive ? <Title>Done</Title> : <Title>Working</Title>}
       <Contents>
         {data?.map(
-          (todo, index) =>
+          (todo) =>
             todo.isDone === isActive && (
               <TodoContainer key={todo.id} todo={todo}></TodoContainer>
             )
