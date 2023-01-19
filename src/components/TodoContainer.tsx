@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteTodo, updateTodo } from "../api/todoquery";
 import { useMutation, useQueryClient } from "react-query";
 
-const TodoContainer = ({ todo }) => {
+const TodoContainer = ({ todo }: any) => {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState(todo.title);
