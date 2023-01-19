@@ -1,19 +1,37 @@
 import React from "react";
 import styled from "styled-components";
-import { __deleteTodo, __updateTodo } from "../redux/modules/todos";
-import { useDispatch } from "react-redux";
+import CusttomButton from "./CusttomButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { deleteTodo, updateTodo } from "../api/todoquery";
+import { useMutation, useQueryClient } from "react-query";
 
-const TodoContainer = ({ todo }: any) => {
+const TodoContainer = ({ todo }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState(todo.title);
   const [content, setContent] = useState(todo.content);
 
+  const queryClient = useQueryClient();
+
+  const deleteMutate = useMutation(deleteTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+
+  const updateMutate = useMutation(updateTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
+
+  // const canSave = [content, title].every(Boolean);
   const UpdateTodo = () => {
+    // if (content === "" || title === "") {
+    //   window.alert("제목및 내용을 입력하세요");
+    //   return;
+    // }
     let NewTodo = {
       ...todo,
       title,
@@ -21,7 +39,7 @@ const TodoContainer = ({ todo }: any) => {
       displaytoggle: !todo.displaytoggle,
     };
 
-    dispatch(__updateTodo(NewTodo));
+    updateMutate.mutate(NewTodo);
   };
 
   const ToggleTodo = () => {
@@ -30,7 +48,7 @@ const TodoContainer = ({ todo }: any) => {
       displaytoggle: !todo.displaytoggle,
     };
 
-    dispatch(__updateTodo(NewTodo));
+    updateMutate.mutate(NewTodo);
   };
 
   const ToggleisDone = () => {
@@ -40,7 +58,7 @@ const TodoContainer = ({ todo }: any) => {
     };
     console.log(NewTodo);
 
-    dispatch(__updateTodo(NewTodo));
+    updateMutate.mutate(NewTodo);
   };
 
   return (
@@ -48,7 +66,7 @@ const TodoContainer = ({ todo }: any) => {
       <TitleWrap>
         <div>제목 : {todo.title}</div>
         <CusttomButton
-          onClick={() => {
+          onClickFuntion={() => {
             navigate(`/${todo.id}`);
           }}
         >
@@ -82,21 +100,21 @@ const TodoContainer = ({ todo }: any) => {
       {todo.displaytoggle ? (
         <ButtonsWrap>
           <CusttomButton
-            onClick={() => {
-              dispatch(__deleteTodo(todo.id));
+            onClickFuntion={() => {
+              deleteMutate.mutate(todo.id);
             }}
           >
             삭제
           </CusttomButton>
-          <CusttomButton onClick={ToggleTodo}>수정</CusttomButton>
-          <CusttomButton onClick={ToggleisDone}>
+          <CusttomButton onClickFuntion={ToggleTodo}>수정</CusttomButton>
+          <CusttomButton onClickFuntion={ToggleisDone}>
             {todo.isDone ? "취소" : "완료"}
           </CusttomButton>
         </ButtonsWrap>
       ) : (
         <ButtonsWrap>
-          <CusttomButton onClick={ToggleTodo}>취소</CusttomButton>
-          <CusttomButton onClick={UpdateTodo}>수정</CusttomButton>
+          <CusttomButton onClickFuntion={ToggleTodo}>취소</CusttomButton>
+          <CusttomButton onClickFuntion={UpdateTodo}>수정</CusttomButton>
         </ButtonsWrap>
       )}
     </TodoContainerWrap>
@@ -144,16 +162,4 @@ const InputsWrap = styled.div`
   flex-direction: column;
   gap: 5px;
   align-items: flex-end;
-`;
-
-const CusttomButton = styled.button`
-  width: 60px;
-  height: 30px;
-  cursor: pointer;
-  border: 0.5px solid #a5a5a5;
-  border-radius: 30px;
-  font-weight: 200;
-  font-size: 12px;
-  color: #000000;
-  background-color: white;
 `;

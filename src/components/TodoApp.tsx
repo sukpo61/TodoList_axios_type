@@ -2,16 +2,8 @@ import React, { useEffect } from "react";
 import TodoAddform from "./TodoAddform";
 import TodosContainer from "./TodosContainer";
 import styled from "styled-components";
-import { __getTodo } from "../redux/modules/todos";
-import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 const TodoApp = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(__getTodo());
-  }, [dispatch]);
-
   return (
     <TodoAppWrap>
       <TodoAddform></TodoAddform>
