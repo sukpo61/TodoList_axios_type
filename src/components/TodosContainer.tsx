@@ -4,7 +4,6 @@ import TodoContainer from "./TodoContainer";
 import { getTodos } from "../api/todoquery";
 import { useQuery } from "react-query";
 import { AxiosError } from "axios";
-
 interface errortype {}
 
 interface todotype {

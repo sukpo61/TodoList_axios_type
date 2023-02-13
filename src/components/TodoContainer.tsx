@@ -5,7 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { deleteTodo, updateTodo } from "../api/todoquery";
 import { useMutation, useQueryClient } from "react-query";
 
-const TodoContainer = ({ todo }: any) => {
+interface Todo {
+  todo: todotype;
+}
+
+interface todotype {
+  id: string;
+  title: string;
+  content: string;
+  isDone: boolean;
+  displaytoggle: boolean;
+}
+
+const TodoContainer = ({ todo }: Todo) => {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState(todo.title);
